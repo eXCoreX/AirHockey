@@ -17,6 +17,6 @@ func _input(event):
 	#	print(event.index);
 	#if (event.type == InputEvent.SCREEN_TOUCH && !event.pressed):
 	#	touchID = -1;
-	if (event.type == InputEvent.SCREEN_TOUCH):
+	if (event.type == InputEvent.SCREEN_DRAG):
 		#get_parent().get_node("Node2D").set_pos(event.pos)
 		entities[event.index].set_global_pos(event.pos)
