@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=1]
+
+[ext_resource path="res://Scripts/DebugTouch.gd" type="Script" id=1]
+
+[node name="Node2D" type="Node2D"]
+
+transform/scale = Vector2( 0.5, 0.5 )
+script/script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+text = 0
+
+[node name="CollisionPolygon2D" type="Polygon2D" parent="."]
+
+polygon = Vector2Array( -32, -32, 32, -32, 32, 32, -32, 32 )
+uv = Vector2Array(  )
+color = Color( 1, 1, 1, 1 )
+vertex_colors = ColorArray(  )
+offset = Vector2( 0, 0 )
+texture/texture = null
+texture/offset = Vector2( 0, 0 )
+texture/scale = Vector2( 1, 1 )
+texture/rotation = 0.0
+invert/enable = false
+invert/border = 100.0
+
+[node name="Label" type="Label" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = -32.0
+margin/top = -32.0
+margin/right = 32.0
+margin/bottom = 32.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "0"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+
