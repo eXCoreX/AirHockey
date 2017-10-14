@@ -5,6 +5,9 @@ ehthumbs.db
 # Folder config file
 Desktop.ini
 
+# Godot cache files
+*.fscache
+
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
 
