@@ -14,5 +14,6 @@ margin/top = 0.0
 margin/right = 640.0
 margin/bottom = 645.0
 script/script = ExtResource( 1 )
+puck = null
 
 

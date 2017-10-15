@@ -19,9 +19,10 @@ func _fixed_process(delta):
 	
 	if(is_colliding()):
 		#1 + (sqrt(couter) * mult)
-		velocity = get_collision_normal().reflect(velocity.normalized())*dv.length()*(1 + (sqrt(counter)*0.1))
-		#if("velocity" in get_collider()):
-		#	velocity += get_collider().velocity
+		velocity = get_collision_normal().reflect(velocity)#*dv.length()*(1 + (sqrt(counter)*0.1))
+		if("prevvelocity" in get_collider()):
+			velocity += get_collider().prevvelocity
+			print(get_collider().prevvelocity)
 		#print(.get_name())
 		
 	
