@@ -22,6 +22,11 @@ func _input(event):
 	if (event.type == InputEvent.SCREEN_TOUCH && !event.pressed && event.index == touchID):
 		touchID = -1;
 		get_node(puck).setGrabbed(false);
-	if (event.type == InputEvent.SCREEN_DRAG && rect.has_point(event.pos) && event.index == touchID):
-		entities[touchID].set_global_pos(event.pos)
-		get_node(puck).moveTo(event.pos)
+	if (event.type == InputEvent.SCREEN_DRAG && event.index == touchID):
+		if(rect.has_point(event.pos)):
+			entities[touchID].set_global_pos(event.pos)
+			get_node(puck).moveTo(event.pos)
+			get_node(puck).setGrabbed(true);
+		else:
+			get_node(puck).setGrabbed(false);
+			

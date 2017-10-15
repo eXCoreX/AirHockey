@@ -19,24 +19,19 @@ func _ready():
 	else:
 		get_node("PuckTextures/RedPuck").show()
 		get_node("PuckTextures/BluePuck").hide()
+	print(get_global_pos())
 	pass
 
 func setGrabbed(grab):
 	grabbed = grab;
-	if(grabbed == false):
-		velocity = (position - prevposition)
-		var sings = Vector2(sign(velocity.x), sign(velocity.y))
-		velocity *= velocity
-		velocity *= sings/2
-		set_process(true);
-	else:
-		set_process(false);
+	if(grabbed):
 		velocity = Vector2(0, 0);
 	pass
 
 func moveTo(pos):
 	prevposition = position
 	position = pos
+	velocity = position - prevposition
 	move_to(position)
 	#print(get_global_pos())
 	pass
