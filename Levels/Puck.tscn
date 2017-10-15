@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=1]
+
+[ext_resource path="res://Scripts/Puck.gd" type="Script" id=1]
+[ext_resource path="res://Assets/cickerblue.png" type="Texture" id=2]
+[ext_resource path="res://Assets/cickerred.png" type="Texture" id=3]
+
+[node name="Puck" type="KinematicBody2D"]
+
+input/pickable = false
+collision/layers = 1
+collision/mask = 1
+collision/margin = 0.08
+script/script = ExtResource( 1 )
+puck_Texture = null
+
+[node name="PuckTextures" type="Node2D" parent="."]
+
+transform/scale = Vector2( 12, 12 )
+
+[node name="BluePuck" type="Sprite" parent="PuckTextures"]
+
+visibility/visible = false
+transform/pos = Vector2( -2.86102e-06, -2.86102e-06 )
+texture = ExtResource( 2 )
+
+[node name="RedPuck" type="Sprite" parent="PuckTextures"]
+
+transform/pos = Vector2( -2.86102e-06, -2.86102e-06 )
+texture = ExtResource( 3 )
+
+
