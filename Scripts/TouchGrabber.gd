@@ -17,6 +17,7 @@ func _input(event):
 		touchID = event.index
 		get_node(puck).setGrabbed(true);
 		get_node(puck).moveTo(event.pos)
+
 	if (event.type == InputEvent.SCREEN_TOUCH && !event.pressed && event.index == touchID):
 		touchID = -1;
 		get_node(puck).setGrabbed(false);
