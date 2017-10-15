@@ -9,7 +9,7 @@ export(int, "Blue", "Red") var puck_Texture = 1
 
 var grabbed = false
 onready var prevposition = get_global_pos()
-var position = get_global_pos()
+onready var position = get_global_pos()
 var velocity = Vector2(0, 0)
 
 func _ready():
@@ -38,6 +38,7 @@ func moveTo(pos):
 	prevposition = position
 	position = pos
 	move_to(position)
+	#print(get_global_pos())
 	pass
 
 func _process(delta):
