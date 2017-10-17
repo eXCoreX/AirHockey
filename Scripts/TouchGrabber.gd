@@ -20,8 +20,6 @@ func clampS(pos, radius, minimum, maximum):
 	pass
 
 func _input(event):
-	var dragged = false
-	var isvalid = false
 	if (event.type == InputEvent.SCREEN_TOUCH && event.pressed && touchID == -1 && rect.has_point(event.pos)):
 		touchID = event.index
 		get_node(puck).setGrabbed(true);
@@ -33,7 +31,6 @@ func _input(event):
 		get_node(puck).setGrabbed(false);
 		
 	if (event.type == InputEvent.SCREEN_DRAG && event.index == touchID):
-		dragged = true
 		get_node(puck).setGrabbed(true);
 		var fpos = event.pos
 		#print(rect.end)
@@ -41,7 +38,3 @@ func _input(event):
 		fpos.y = clampS(fpos.y, 96, rect.pos.y, rect.end.y)
 		entities[touchID].set_global_pos(fpos)
 		get_node(puck).moveTo(fpos)
-	
-	if(!dragged  and get_node(puck).grabbed):
-		get_node(puck).setGrabbed(false);
-		print("reset")

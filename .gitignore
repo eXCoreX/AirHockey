@@ -8,6 +8,9 @@ Desktop.ini
 # Godot cache files
 *.fscache
 
+# Godot export config
+export.cfg
+
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
 
