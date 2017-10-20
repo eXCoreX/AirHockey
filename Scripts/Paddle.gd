@@ -9,7 +9,8 @@ export(int, "Blue", "Red") var puck_Texture = 1
 
 var grabbed = false
 #onready var prevposition = get_global_pos()
-onready var position = get_global_pos()
+#onready var position = get_global_pos()
+var newpos = Vector2(0, 0)
 #var velocity = Vector2(0, 0)
 #var prevvelocity = velocity
 
@@ -38,15 +39,15 @@ func moveTo(pos):
 	#position = pos
 	#prevvelocity = velocity
 	#velocity = position - prevposition
-	position = pos
+	newpos = pos
 	#set_linear_velocity(Vector2(0,0))
 	#print(get_global_pos())
 	pass
 
 func _fixed_process(delta):
 	if(grabbed):
-		set_global_pos(position)
-		set_linear_velocity(Vector2(0,0))
+		set_linear_velocity((newpos-get_pos())/delta)
+		set_pos(newpos)
 	get_node("Label").set_text(str(get_linear_velocity()))
 	#moveTo(position+velocity*delta)
 	#moveTo(get_pos())

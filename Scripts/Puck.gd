@@ -11,15 +11,19 @@ var velocity = dv
 
 func _ready():
 	set_linear_velocity(dv)
-	#set_fixed_process(true)
+	set_fixed_process(true)
 	pass
 
 func _integrate_forces(state):
 	
 	if(state.get_contact_count() >= 1):
 		var normal = state.get_contact_local_normal(0)
+		#velocity = get_linear_velocity()
 		velocity = normal.reflect(velocity)
-		set_linear_velocity(velocity)
+		var adder = Vector2(0, 0);
+		if(state.get_contact_collider_object(0).has_method("get_linear_velocity")):
+			adder = state.get_contact_collider_object(0).get_linear_velocity()*0.5
+		set_linear_velocity(velocity+adder)
 	
 	pass
 

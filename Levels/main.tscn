@@ -14,7 +14,7 @@ extents = Vector2( 640, 60 )
 [sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
-extents = Vector2( 80, 330 )
+extents = Vector2( 80, 450 )
 
 [node name="Node" type="Node"]
 
