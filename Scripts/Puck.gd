@@ -1,14 +1,12 @@
 extends RigidBody2D
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
-
+onready var TweenNode = get_node("Tween")
 var counter = 0;
 
 const sv = 250
 var velocity = Vector2(sv, 0)
 var paddleVelocity = Vector2(0,0)
+var newVelocity = Vector2(0,0)
 var maxVelocity = 4203
 
 func _ready():
@@ -17,25 +15,25 @@ func _ready():
 	pass
 
 func _integrate_forces(state):
-	
 	if(state.get_contact_count() >= 1):
 		var normal = state.get_contact_local_normal(0)
-		#velocity = get_linear_velocity()
-		if(normal.dot(velocity.normalized()) < 0):
-			velocity = normal.reflect(velocity).normalized() * sv
-			paddleVelocity = normal.reflect(paddleVelocity)
-		#var adder = Vector2(0, 0);
+		var newVelocity = normal.reflect(velocity)
+		TweenNode.stop(self, "velocity/linear")
 		if(state.get_contact_collider_object(0).has_method("get_linear_velocity")):
-			#adder = state.get_contact_collider_object(0).get_linear_velocity()*0.5
-			paddleVelocity = (state.get_contact_collider_object(0).get_linear_velocity())*0.175
-		var newVelocity = velocity+paddleVelocity;
+			var collideObj = state.get_contact_collider_object(0)
+			var paddleVelocity = collideObj.get_linear_velocity()
+			if(paddleVelocity.length() != 0 && newVelocity.dot(paddleVelocity) > 0):
+				newVelocity = newVelocity + paddleVelocity * 0.135
+			elif(paddleVelocity.length() == 0):
+				TweenNode.interpolate_property(self, "velocity/linear", newVelocity, 0.85*newVelocity, 2, Tween.TRANS_LINEAR, Tween.EASE_OUT)
+				TweenNode.start()
+		else:
+			TweenNode.interpolate_property(self, "velocity/linear", newVelocity, 0.95*newVelocity, 2, Tween.TRANS_SINE, Tween.EASE_OUT)
+			TweenNode.start()
 		newVelocity = min(newVelocity.length(), maxVelocity) * newVelocity.normalized()
 		set_linear_velocity(newVelocity)
 	
-	pass
-
 func _fixed_process(delta):
-	
 	velocity = get_linear_velocity()
 	get_node("Label").set_text(str(velocity))
 	#print(velocity)
@@ -53,4 +51,3 @@ func _fixed_process(delta):
 	
 	#move(velocity*delta)
 	
-	pass
