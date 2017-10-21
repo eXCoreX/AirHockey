@@ -6,25 +6,25 @@
 [ext_resource path="res://Levels/Puck.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Levels/TouchGrabber.tscn" type="PackedScene" id=5]
 
-[sub_resource type="LineShape2D" id=4]
+[sub_resource type="LineShape2D" id=1]
 
 custom_solver_bias = 0.0
 normal = Vector2( 0, 1 )
 d = 105.0
 
-[sub_resource type="LineShape2D" id=5]
+[sub_resource type="LineShape2D" id=2]
 
 custom_solver_bias = 0.0
 normal = Vector2( 0, -1 )
 d = 60.0
 
-[sub_resource type="LineShape2D" id=6]
+[sub_resource type="LineShape2D" id=3]
 
 custom_solver_bias = 0.0
 normal = Vector2( 1, 0 )
 d = 80.0
 
-[sub_resource type="LineShape2D" id=3]
+[sub_resource type="LineShape2D" id=4]
 
 custom_solver_bias = 0.0
 normal = Vector2( -1, 0 )
@@ -139,16 +139,16 @@ collision/layers = 0
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 input/pickable = false
-shapes/0/shape = SubResource( 4 )
+shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Matrix32( 10, 0, 0, 1, 640, -30 )
 shapes/0/trigger = false
-shapes/1/shape = SubResource( 5 )
+shapes/1/shape = SubResource( 2 )
 shapes/1/transform = Matrix32( 10, 0, 0, 1, 640, 780 )
 shapes/1/trigger = false
-shapes/2/shape = SubResource( 6 )
+shapes/2/shape = SubResource( 3 )
 shapes/2/transform = Matrix32( 1, 0, 0, 6, -80, 405 )
 shapes/2/trigger = false
-shapes/3/shape = SubResource( 3 )
+shapes/3/shape = SubResource( 4 )
 shapes/3/transform = Matrix32( 1, 0, 0, 6, 1360, 420 )
 shapes/3/trigger = false
 collision/layers = 1
@@ -162,7 +162,7 @@ bounce = 1.0
 
 transform/pos = Vector2( 640, -30 )
 transform/scale = Vector2( 10, 1 )
-shape = SubResource( 4 )
+shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
 
@@ -170,7 +170,7 @@ _update_shape_index = 0
 
 transform/pos = Vector2( 640, 780 )
 transform/scale = Vector2( 10, 1 )
-shape = SubResource( 5 )
+shape = SubResource( 2 )
 trigger = false
 _update_shape_index = 1
 
@@ -178,7 +178,7 @@ _update_shape_index = 1
 
 transform/pos = Vector2( -80, 405 )
 transform/scale = Vector2( 1, 6 )
-shape = SubResource( 6 )
+shape = SubResource( 3 )
 trigger = false
 _update_shape_index = 2
 
@@ -186,7 +186,7 @@ _update_shape_index = 2
 
 transform/pos = Vector2( 1360, 420 )
 transform/scale = Vector2( 1, 6 )
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 trigger = false
 _update_shape_index = 3
 
