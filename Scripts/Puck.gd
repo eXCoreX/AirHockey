@@ -6,7 +6,7 @@ extends RigidBody2D
 
 var counter = 0;
 
-const sv = 250
+const sv = 350
 var velocity = Vector2(sv, 0)
 var paddleVelocity = Vector2(0,0)
 var maxVelocity = 4203
@@ -28,6 +28,11 @@ func _integrate_forces(state):
 		if(state.get_contact_collider_object(0).has_method("get_linear_velocity")):
 			#adder = state.get_contact_collider_object(0).get_linear_velocity()*0.5
 			paddleVelocity = (state.get_contact_collider_object(0).get_linear_velocity())*0.175
+			var material = state.get_contact_collider_object(0).get_node("PuckTextures").get_material()
+			material.set_shader_param("flash", 1)
+			get_node("Tween").interpolate_callback(material, 0.1, "set_shader_param", "flash", 0)
+			get_node("Tween").start()
+		print(paddleVelocity.length())
 		var newVelocity = velocity+paddleVelocity;
 		newVelocity = min(newVelocity.length(), maxVelocity) * newVelocity.normalized()
 		set_linear_velocity(newVelocity)

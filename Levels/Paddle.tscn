@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=7 format=1]
 
 [ext_resource path="res://Scripts/Paddle.gd" type="Script" id=1]
 [ext_resource path="res://Assets/cickerblue.png" type="Texture" id=2]
@@ -8,6 +8,27 @@
 
 custom_solver_bias = 0.0
 radius = 96.0
+
+[sub_resource type="CanvasItemShader" id=7]
+
+_code = {
+"fragment": "uniform float flash = 0;
+
+vec4 t = tex(TEXTURE, UV);
+
+COLOR = mix(t, vec4(1, 1, 1, t.a), flash);",
+"fragment_ofs": 0,
+"light": "",
+"light_ofs": 0,
+"vertex": "",
+"vertex_ofs": 0
+}
+
+[sub_resource type="CanvasItemMaterial" id=6]
+
+shader/shader = SubResource( 7 )
+shader/shading_mode = 1
+shader_param/flash = 0.0
 
 [node name="Puck" type="RigidBody2D"]
 
@@ -37,17 +58,19 @@ puck_Texture = 1
 
 [node name="PuckTextures" type="Node2D" parent="."]
 
-editor/display_folded = true
+material/material = SubResource( 6 )
 transform/scale = Vector2( 12, 12 )
 
 [node name="BluePuck" type="Sprite" parent="PuckTextures"]
 
 visibility/visible = false
+material/use_parent = true
 transform/pos = Vector2( -2.86102e-06, -2.86102e-06 )
 texture = ExtResource( 2 )
 
 [node name="RedPuck" type="Sprite" parent="PuckTextures"]
 
+material/use_parent = true
 transform/pos = Vector2( -2.86102e-06, -2.86102e-06 )
 texture = ExtResource( 3 )
 
