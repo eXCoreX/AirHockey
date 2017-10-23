@@ -192,14 +192,12 @@ _update_shape_index = 3
 
 [node name="RedHalf" parent="." instance=ExtResource( 5 )]
 
-margin/top = 75.0
 margin/bottom = 720.0
 puck = NodePath("../RedPuck")
 
 [node name="BlueHalf" parent="." instance=ExtResource( 5 )]
 
 margin/left = 640.0
-margin/top = 75.0
 margin/right = 1280.0
 margin/bottom = 720.0
 puck = NodePath("../BluePuck")

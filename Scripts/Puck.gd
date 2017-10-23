@@ -3,7 +3,7 @@ extends RigidBody2D
 onready var TweenNode = get_node("Tween")
 var counter = 0;
 
-const sv = 250
+const sv = 350
 var velocity = Vector2(sv, 0)
 var paddleVelocity = Vector2(0,0)
 var newVelocity = Vector2(0,0)
@@ -22,6 +22,10 @@ func _integrate_forces(state):
 		if(state.get_contact_collider_object(0).has_method("get_linear_velocity")):
 			var collideObj = state.get_contact_collider_object(0)
 			var paddleVelocity = collideObj.get_linear_velocity()
+			var material = state.get_contact_collider_object(0).get_node("PuckTextures").get_material()
+			material.set_shader_param("flash", 1)
+			TweenNode.interpolate_callback(material, 0.1, "set_shader_param", "flash", 0)
+			TweenNode.start()
 			if(paddleVelocity.length() != 0 && newVelocity.dot(paddleVelocity) > 0):
 				newVelocity = newVelocity + paddleVelocity * 0.135
 			elif(paddleVelocity.length() == 0):
@@ -30,6 +34,14 @@ func _integrate_forces(state):
 		else:
 			TweenNode.interpolate_property(self, "velocity/linear", newVelocity, 0.95*newVelocity, 2, Tween.TRANS_SINE, Tween.EASE_OUT)
 			TweenNode.start()
+			#adder = state.get_contact_collider_object(0).get_linear_velocity()*0.5
+			#paddleVelocity = (state.get_contact_collider_object(0).get_linear_velocity())*0.175
+			#var material = state.get_contact_collider_object(0).get_node("PuckTextures").get_material()
+			#material.set_shader_param("flash", 1)
+			#get_node("Tween").interpolate_callback(material, 0.1, "set_shader_param", "flash", 0)
+			#get_node("Tween").start()
+		#print(paddleVelocity.length())
+		#var newVelocity = velocity+paddleVelocity;
 		newVelocity = min(newVelocity.length(), maxVelocity) * newVelocity.normalized()
 		set_linear_velocity(newVelocity)
 	
