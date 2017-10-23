@@ -23,6 +23,7 @@ func _ready():
 		get_node("PuckTextures/RedPuck").show()
 		get_node("PuckTextures/BluePuck").hide()
 	set_fixed_process(true)
+	get_node("PuckTextures").set_material(get_node("PuckTextures").get_material().duplicate())
 	pass
 
 func setGrabbed(grab):

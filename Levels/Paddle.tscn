@@ -9,7 +9,7 @@
 custom_solver_bias = 0.0
 radius = 96.0
 
-[sub_resource type="CanvasItemShader" id=7]
+[sub_resource type="CanvasItemShader" id=2]
 
 _code = {
 "fragment": "uniform float flash = 0;
@@ -24,9 +24,9 @@ COLOR = mix(t, vec4(1, 1, 1, t.a), flash);",
 "vertex_ofs": 0
 }
 
-[sub_resource type="CanvasItemMaterial" id=6]
+[sub_resource type="CanvasItemMaterial" id=3]
 
-shader/shader = SubResource( 7 )
+shader/shader = SubResource( 2 )
 shader/shading_mode = 1
 shader_param/flash = 0.0
 
@@ -58,7 +58,7 @@ puck_Texture = 1
 
 [node name="PuckTextures" type="Node2D" parent="."]
 
-material/material = SubResource( 6 )
+material/material = SubResource( 3 )
 transform/scale = Vector2( 12, 12 )
 
 [node name="BluePuck" type="Sprite" parent="PuckTextures"]
