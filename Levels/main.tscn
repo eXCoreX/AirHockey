@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=1]
+[gd_scene load_steps=13 format=1]
 
 [ext_resource path="res://Assets/field.png" type="Texture" id=1]
 [ext_resource path="res://Levels/Paddle.tscn" type="PackedScene" id=2]
@@ -6,13 +6,40 @@
 [ext_resource path="res://Levels/Puck.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Levels/TouchGrabber.tscn" type="PackedScene" id=5]
 
+[sub_resource type="CanvasItemShader" id=2]
+
+_code = {
+"fragment": "uniform float flash = 0;
+
+vec4 t = tex(TEXTURE, UV);
+
+COLOR = mix(t, vec4(1, 1, 1, t.a), flash);",
+"fragment_ofs": 0,
+"light": "",
+"light_ofs": 0,
+"vertex": "",
+"vertex_ofs": 0
+}
+
+[sub_resource type="CanvasItemMaterial" id=7]
+
+shader/shader = SubResource( 2 )
+shader/shading_mode = 1
+shader_param/flash = 0.0
+
+[sub_resource type="CanvasItemMaterial" id=8]
+
+shader/shader = SubResource( 2 )
+shader/shading_mode = 1
+shader_param/flash = 0.0
+
 [sub_resource type="LineShape2D" id=1]
 
 custom_solver_bias = 0.0
 normal = Vector2( 0, 1 )
 d = 105.0
 
-[sub_resource type="LineShape2D" id=2]
+[sub_resource type="LineShape2D" id=6]
 
 custom_solver_bias = 0.0
 normal = Vector2( 0, -1 )
@@ -64,12 +91,28 @@ transform/pos = Vector2( 160, 405 )
 collision/layers = 4
 collision/mask = 0
 
+[node name="PuckTextures" parent="RedPuck"]
+
+material/material = SubResource( 7 )
+
 [node name="BluePuck" parent="." instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 1120, 405 )
 collision/layers = 4
 collision/mask = 0
 puck_Texture = 0
+
+[node name="PuckTextures" parent="BluePuck"]
+
+material/material = SubResource( 8 )
+
+[node name="BluePuck" parent="BluePuck/PuckTextures"]
+
+visibility/visible = true
+
+[node name="RedPuck" parent="BluePuck/PuckTextures"]
+
+visibility/visible = false
 
 [node name="Node2D" type="Node2D" parent="."]
 
@@ -147,7 +190,7 @@ input/pickable = false
 shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Matrix32( 10, 0, 0, 1, 640, -30 )
 shapes/0/trigger = false
-shapes/1/shape = SubResource( 2 )
+shapes/1/shape = SubResource( 6 )
 shapes/1/transform = Matrix32( 10, 0, 0, 1, 640, 780 )
 shapes/1/trigger = false
 shapes/2/shape = SubResource( 3 )
@@ -175,7 +218,7 @@ _update_shape_index = 0
 
 transform/pos = Vector2( 640, 780 )
 transform/scale = Vector2( 10, 1 )
-shape = SubResource( 2 )
+shape = SubResource( 6 )
 trigger = false
 _update_shape_index = 1
 
@@ -206,3 +249,5 @@ margin/right = 1280.0
 puck = NodePath("../BluePuck")
 
 
+[editable path="RedPuck"]
+[editable path="BluePuck"]
