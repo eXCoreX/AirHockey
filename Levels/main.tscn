@@ -12,7 +12,7 @@ custom_solver_bias = 0.0
 normal = Vector2( 0, 1 )
 d = 105.0
 
-[sub_resource type="LineShape2D" id=7]
+[sub_resource type="LineShape2D" id=2]
 
 custom_solver_bias = 0.0
 normal = Vector2( 0, -1 )
@@ -143,7 +143,7 @@ input/pickable = false
 shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Matrix32( 10, 0, 0, 1, 640, -30 )
 shapes/0/trigger = false
-shapes/1/shape = SubResource( 7 )
+shapes/1/shape = SubResource( 2 )
 shapes/1/transform = Matrix32( 10, 0, 0, 1, 640, 780 )
 shapes/1/trigger = false
 shapes/2/shape = SubResource( 3 )
@@ -171,7 +171,7 @@ _update_shape_index = 0
 
 transform/pos = Vector2( 640, 780 )
 transform/scale = Vector2( 10, 1 )
-shape = SubResource( 7 )
+shape = SubResource( 2 )
 trigger = false
 _update_shape_index = 1
 

@@ -32,6 +32,8 @@ func _input(event):
 	#event = make_input_local(event)
 	event = make_input_local(event)
 	#var transform = camera.get_transform().xform_inv(event.pos) + Vector2(640, 360)
+	if(!(event.type == InputEvent.SCREEN_TOUCH || event.type == InputEvent.SCREEN_DRAG)):
+		return
 	var transform = get_transform().xform(event.pos)
 	var fpos
 	#print(transform)
