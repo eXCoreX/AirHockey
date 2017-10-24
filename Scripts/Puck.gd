@@ -1,65 +1,44 @@
 extends RigidBody2D
 
-onready var TweenNode = get_node("Tween")
-var counter = 0;
+onready var TweenNode = get_node("Tween") #Tween node
+var counter = 0; # counter for hits
 
-const sv = 350
-var velocity = Vector2(sv, 0)
-var paddleVelocity = Vector2(0,0)
-var newVelocity = Vector2(0,0)
-var maxVelocity = 4203
+const sv = 350 #start velocity
+var velocity = Vector2(sv, 0) #current velocity
+var maxVelocity = 4203 #Maximum velocity
 
 func _ready():
-	set_linear_velocity(velocity)
-	set_fixed_process(true)
+	set_linear_velocity(velocity) #start velocity
+	set_fixed_process(true) #set fixed process
 	pass
 
 func _integrate_forces(state):
-	if(state.get_contact_count() >= 1):
-		var normal = state.get_contact_local_normal(0)
-		var newVelocity = normal.reflect(velocity)
-		TweenNode.stop(self, "velocity/linear")
-		if(state.get_contact_collider_object(0).has_method("get_linear_velocity")):
-			var collideObj = state.get_contact_collider_object(0)
-			var paddleVelocity = collideObj.get_linear_velocity()
-			var material = state.get_contact_collider_object(0).get_node("PuckTextures").get_material()
-			material.set_shader_param("flash", 1)
-			TweenNode.interpolate_callback(material, 0.1, "set_shader_param", "flash", 0)
+	if(state.get_contact_count() < 1):
+		return
+	
+	TweenNode.stop(self, "velocity/linear") #stop tweens
+	var normal = state.get_contact_local_normal(0) #get collision normal
+	var collideObj = state.get_contact_collider_object(0) #get colliding object
+	var newVelocity = normal.reflect(velocity) #reflect the velocity
+	if(collideObj.has_method("get_linear_velocity")): # if colliding body is rigidBody
+		var paddleVelocity = collideObj.get_linear_velocity() #get paddle velocity
+		var material = collideObj.get_paddle_material() #get paddle material
+		material.set_shader_param("flash", 1) #flash
+		TweenNode.interpolate_callback(material, 0.1, "set_shader_param", "flash", 0) #stop flash after x seconds
+		TweenNode.start() #start tween
+		if(paddleVelocity.length() != 0 && newVelocity.dot(paddleVelocity) > 0): #if paddle is moving and at the correct angle 
+			newVelocity = newVelocity + paddleVelocity * 0.135 # add paddle's velocity to puck's velocity 
+		elif(paddleVelocity.length() == 0): #if paddle isn't moving
+			TweenNode.interpolate_property(self, "velocity/linear", newVelocity, 0.85*newVelocity, 2, Tween.TRANS_LINEAR, Tween.EASE_OUT) #slowdown slowly
 			TweenNode.start()
-			if(paddleVelocity.length() != 0 && newVelocity.dot(paddleVelocity) > 0):
-				newVelocity = newVelocity + paddleVelocity * 0.135
-			elif(paddleVelocity.length() == 0):
-				TweenNode.interpolate_property(self, "velocity/linear", newVelocity, 0.85*newVelocity, 2, Tween.TRANS_LINEAR, Tween.EASE_OUT)
-				TweenNode.start()
-		else:
-			TweenNode.interpolate_property(self, "velocity/linear", newVelocity, 0.95*newVelocity, 2, Tween.TRANS_SINE, Tween.EASE_OUT)
-			TweenNode.start()
-			#adder = state.get_contact_collider_object(0).get_linear_velocity()*0.5
-			#paddleVelocity = (state.get_contact_collider_object(0).get_linear_velocity())*0.175
-			#var material = state.get_contact_collider_object(0).get_node("PuckTextures").get_material()
-			#material.set_shader_param("flash", 1)
-			#get_node("Tween").interpolate_callback(material, 0.1, "set_shader_param", "flash", 0)
-			#get_node("Tween").start()
-		#print(paddleVelocity.length())
-		#var newVelocity = velocity+paddleVelocity;
-		newVelocity = min(newVelocity.length(), maxVelocity) * newVelocity.normalized()
-		set_linear_velocity(newVelocity)
+	else: #if object is static
+		TweenNode.interpolate_property(self, "velocity/linear", newVelocity, 0.95*newVelocity, 2, Tween.TRANS_SINE, Tween.EASE_OUT) #slowdown
+		TweenNode.start()
+
+	newVelocity = min(newVelocity.length(), maxVelocity) * newVelocity.normalized() #clamp velocity
+	set_linear_velocity(newVelocity) #force set velocity
 	
 func _fixed_process(delta):
-	velocity = get_linear_velocity()
-	get_node("Label").set_text(str(velocity))
-	#print(velocity)
-	
-	#counter += 1
-	
-	#if(is_colliding()):
-		#1 + (sqrt(couter) * mult)
-	#	velocity = get_collision_normal().reflect(velocity)#*dv.length()*(1 + (sqrt(counter)*0.1))
-	#	if("prevvelocity" in get_collider()):
-	#		velocity += get_collider().prevvelocity
-	#		print(get_collider().prevvelocity)
-		#print(.get_name())
-		
-	
-	#move(velocity*delta)
+	velocity = get_linear_velocity() #prepare velocity
+	get_node("Label").set_text(str(velocity)) #debug lable
 	

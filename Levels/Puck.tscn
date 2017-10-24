@@ -8,7 +8,7 @@
 custom_solver_bias = 0.0
 radius = 48.0
 
-[node name="KinematicBody2D" type="RigidBody2D"]
+[node name="Puck" type="RigidBody2D"]
 
 input/pickable = false
 shapes/0/shape = SubResource( 1 )

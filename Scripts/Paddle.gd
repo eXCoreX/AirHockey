@@ -1,29 +1,28 @@
 tool
 extends RigidBody2D
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
+export(int, "Blue", "Red") var puck_Texture = 1 #which puck texture to use 
 
-export(int, "Blue", "Red") var puck_Texture = 1
+var grabbed = false #is grabbed
+var newpos = Vector2(0, 0) #where to move to
+onready var paddleTextures = get_node("PaddleTextures") #reference to paddle textures
 
-var grabbed = false
-#onready var prevposition = get_global_pos()
-#onready var position = get_global_pos()
-var newpos = Vector2(0, 0)
-#var velocity = Vector2(0, 0)
-#var prevvelocity = velocity
+func get_paddle_material():
+	return paddleTextures.get_material();
 
 func _ready():
-	set_mode(MODE_STATIC);
+	set_mode(MODE_STATIC); # set mode to static
+	set_fixed_process(true) # set fixed process
+	
+	#set puck texture
 	if(puck_Texture == 0):
-		get_node("PuckTextures/RedPuck").hide()
-		get_node("PuckTextures/BluePuck").show()
+		paddleTextures.get_child(0).show()
+		paddleTextures.get_child(1).hide()
 	else:
-		get_node("PuckTextures/RedPuck").show()
-		get_node("PuckTextures/BluePuck").hide()
-	set_fixed_process(true)
-	get_node("PuckTextures").set_material(get_node("PuckTextures").get_material().duplicate())
+		paddleTextures.get_child(0).hide()
+		paddleTextures.get_child(1).show()
+	
+	paddleTextures.set_material(paddleTextures.get_material().duplicate()) #create unique instance of material
 	pass
 
 func setGrabbed(grab):
@@ -32,29 +31,15 @@ func setGrabbed(grab):
 		set_mode(MODE_KINEMATIC);
 	else:
 		set_mode(MODE_STATIC);
-	#	velocity = Vector2(0, 0);
 	pass
 
 func moveTo(pos):
-	#prevposition = position
-	#position = pos
-	#prevvelocity = velocity
-	#velocity = position - prevposition
 	newpos = pos
-	#set_linear_velocity(Vector2(0,0))
-	#print(get_global_pos())
 	pass
 
 func _fixed_process(delta):
 	if(grabbed):
-		set_linear_velocity((newpos-get_pos())/delta)
-		set_pos(newpos)
-	get_node("Label").set_text(str(get_linear_velocity()))
-	#moveTo(position+velocity*delta)
-	#moveTo(get_pos())
-	#var vs = Vector2(sign(velocity.x),sign(velocity.y))
-	#velocity -= velocity*delta;
-	#if(velocity.length_squared() < 1 || vs != Vector2(sign(velocity.x),sign(velocity.y))):
-	#	velocity = Vector2(0, 0);
-	#	set_process(false);
-	#pass
+		set_linear_velocity((newpos-get_pos())/delta) #calculate velocity
+		set_pos(newpos) #move to new position
+	get_node("Label").set_text(str(get_linear_velocity())) #debug text
+	

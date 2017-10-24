@@ -1,62 +1,57 @@
 extends Control
 
-var touchID = -1;
-var entities
-onready var camera = get_node("../Camera2D")
-onready var rect = get_rect()
-export(NodePath) var puck
+var touchID = -1; #id of the touch
+var entities #debug touch entities
+onready var rect = get_rect() #rect of the touch grabber
+export(NodePath) var paddlePath #path to paddle
+var paddle #paddle node
 
 func _ready():
 	set_process_input(true)
-	entities = get_parent().get_node("Node2D").get_children()
-	#print(get_rect())
+	entities = get_parent().get_node("debugtouch").get_children() #get debug touch entities
+	paddle = get_node(paddlePath) #set paddle from paddlePath
 	pass
 
-func clampS(pos, radius, minimum, maximum):
-	if(pos.x - radius < minimum.x):
-		pos.x = minimum.x + radius
-	if(pos.x + radius > maximum.x):
-		pos.x = maximum.x - radius
+func clampCircleToRect(pos, radius, rect): #Clamp circle pos to rect
+	if(pos.x - radius < rect.pos.x):
+		pos.x = rect.pos.x + radius
+	if(pos.x + radius > rect.end.x):
+		pos.x = rect.end.x - radius
 		
-	if(pos.y - radius < minimum.y):
-		pos.y = minimum.y + radius
-	if(pos.y + radius > maximum.y):
-		pos.y = maximum.y - radius
+	if(pos.y - radius < rect.pos.y):
+		pos.y = rect.pos.y + radius
+	if(pos.y + radius > rect.end.y):
+		pos.y = rect.end.y - radius
 	return pos
 	pass
 
 func _input(event):
-	#var viewport = get_viewport_rect()
-	#var correction = get_viewport_transform().get_origin()
-	#print(correction)
-	#event = make_input_local(event)
-	event = make_input_local(event)
-	#var transform = camera.get_transform().xform_inv(event.pos) + Vector2(640, 360)
+	
 	if(!(event.type == InputEvent.SCREEN_TOUCH || event.type == InputEvent.SCREEN_DRAG)):
+		return #if event is wrong then stop the function
+	
+	event = make_input_local(event) #make events pos local
+	var globalPos = get_transform().xform(event.pos) #make event pos global
+
+	if (event.type == InputEvent.SCREEN_TOUCH && event.pressed && touchID == -1 && rect.has_point(globalPos)):
+		#if no finger is touching inside the grabber
+		touchID = event.index #record index of the touch
+		paddle.setGrabbed(true); #set puck to grabbed
+		globalPos = clampCircleToRect(globalPos, 96, rect) #clamp to rect of grabber
+		entities[touchID].set_global_pos(globalPos) #debug touch markers
+		paddle.moveTo(globalPos) #move the puck
 		return
-	var transform = get_transform().xform(event.pos)
-	var fpos
-	#print(transform)
-	#entities[9].set_global_pos(transform)
-	if (event.type == InputEvent.SCREEN_TOUCH && event.pressed && touchID == -1 && rect.has_point(transform)):# && rect.has_point(event.pos-correction)):
-		#print(event.pos-correction)
-		touchID = event.index
-		get_node(puck).setGrabbed(true);
-		fpos = transform
-		fpos = clampS(fpos, 96, rect.pos, rect.end)
-		entities[touchID].set_global_pos(fpos)
-		get_node(puck).moveTo(fpos)
 	
 	if (event.type == InputEvent.SCREEN_TOUCH && !event.pressed && event.index == touchID):
-		touchID = -1;
-		get_node(puck).setGrabbed(false);
+		#if the controlling finger stopped touching
+		touchID = -1; #set touch id to none
+		paddle.setGrabbed(false); #set puck to not grabbed
+		return
 		
 	if (event.type == InputEvent.SCREEN_DRAG && event.index == touchID):
-		get_node(puck).setGrabbed(true);
-		fpos = transform
-		#print(rect.end)
-		fpos = clampS(fpos, 96, rect.pos, rect.end)
-		#entities[touchID].set_global_pos(fpos)
-		#get_node(puck).moveTo(fpos)
-		entities[touchID].set_global_pos(fpos)
-		get_node(puck).moveTo(fpos)
+		#if controlling finger drags
+		paddle.setGrabbed(true); #set puck to grabbed
+		globalPos = clampCircleToRect(globalPos, 96, rect) #clamp to rect
+		entities[touchID].set_global_pos(globalPos) #debug markers
+		paddle.moveTo(globalPos) #move puck
+		return

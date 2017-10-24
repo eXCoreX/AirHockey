@@ -1,8 +1,5 @@
-extends Node2D
 tool
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
+extends Node2D
 
 export(int) var text = 0
 

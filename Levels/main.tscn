@@ -58,87 +58,88 @@ transform/scale = Vector2( 12.9293, 12.8571 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="RedPuck" parent="." instance=ExtResource( 2 )]
+[node name="RedPaddle" parent="." instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 160, 405 )
 
-[node name="BluePuck" parent="." instance=ExtResource( 2 )]
+[node name="BluePaddle" parent="." instance=ExtResource( 2 )]
 
 editor/display_folded = true
 transform/pos = Vector2( 1120, 405 )
 puck_Texture = 0
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="debugtouch" type="Node2D" parent="."]
 
 editor/display_folded = true
 transform/scale = Vector2( 0.5, 0.5 )
 
-[node name="Node2D" parent="Node2D" instance=ExtResource( 3 )]
+[node name="Node2D" parent="debugtouch" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( -68, -68 )
 transform/scale = Vector2( 2.125, 2.125 )
 
-[node name="Node2D1" parent="Node2D" instance=ExtResource( 3 )]
+[node name="Node2D1" parent="debugtouch" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( -240, -120 )
 transform/scale = Vector2( 2.125, 2.125 )
 text = 1
 
-[node name="Node2D2" parent="Node2D" instance=ExtResource( 3 )]
+[node name="Node2D2" parent="debugtouch" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( -360, -120 )
 transform/scale = Vector2( 2.125, 2.125 )
 text = 2
 
-[node name="Node2D3" parent="Node2D" instance=ExtResource( 3 )]
+[node name="Node2D3" parent="debugtouch" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( -480, -120 )
 transform/scale = Vector2( 2.125, 2.125 )
 text = 3
 
-[node name="Node2D4" parent="Node2D" instance=ExtResource( 3 )]
+[node name="Node2D4" parent="debugtouch" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( -600, -120 )
 transform/scale = Vector2( 2.125, 2.125 )
 text = 4
 
-[node name="Node2D5" parent="Node2D" instance=ExtResource( 3 )]
+[node name="Node2D5" parent="debugtouch" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( -720, -120 )
 transform/scale = Vector2( 2.125, 2.125 )
 text = 5
 
-[node name="Node2D6" parent="Node2D" instance=ExtResource( 3 )]
+[node name="Node2D6" parent="debugtouch" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( -840, -120 )
 transform/scale = Vector2( 2.125, 2.125 )
 text = 6
 
-[node name="Node2D7" parent="Node2D" instance=ExtResource( 3 )]
+[node name="Node2D7" parent="debugtouch" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( -960, -120 )
 transform/scale = Vector2( 2.125, 2.125 )
 text = 7
 
-[node name="Node2D8" parent="Node2D" instance=ExtResource( 3 )]
+[node name="Node2D8" parent="debugtouch" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( -1080, -120 )
 transform/scale = Vector2( 2.125, 2.125 )
 text = 8
 
-[node name="Node2D9" parent="Node2D" instance=ExtResource( 3 )]
+[node name="Node2D9" parent="debugtouch" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( -1200, -120 )
 transform/scale = Vector2( 2.125, 2.125 )
 text = 9
 
-[node name="KinematicBody2D" parent="." instance=ExtResource( 4 )]
+[node name="Puck" parent="." instance=ExtResource( 4 )]
 
 transform/pos = Vector2( 640, 405 )
 collision/layers = 0
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="Walls" type="StaticBody2D" parent="."]
 
+editor/display_folded = true
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Matrix32( 10, 0, 0, 1, 640, -30 )
@@ -159,7 +160,7 @@ constant_angular_velocity = 0.0
 friction = 0.0
 bounce = 1.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
 
 transform/pos = Vector2( 640, -30 )
 transform/scale = Vector2( 10, 1 )
@@ -167,7 +168,7 @@ shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
 
-[node name="CollisionShape2D1" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D1" type="CollisionShape2D" parent="Walls"]
 
 transform/pos = Vector2( 640, 780 )
 transform/scale = Vector2( 10, 1 )
@@ -175,7 +176,7 @@ shape = SubResource( 2 )
 trigger = false
 _update_shape_index = 1
 
-[node name="CollisionShape2D 2" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D 2" type="CollisionShape2D" parent="Walls"]
 
 transform/pos = Vector2( -80, 405 )
 transform/scale = Vector2( 1, 6 )
@@ -183,7 +184,7 @@ shape = SubResource( 3 )
 trigger = false
 _update_shape_index = 2
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Walls"]
 
 transform/pos = Vector2( 1360, 420 )
 transform/scale = Vector2( 1, 6 )
@@ -194,13 +195,13 @@ _update_shape_index = 3
 [node name="RedHalf" parent="." instance=ExtResource( 5 )]
 
 margin/bottom = 720.0
-puck = NodePath("../RedPuck")
+paddlePath = NodePath("../RedPaddle")
 
 [node name="BlueHalf" parent="." instance=ExtResource( 5 )]
 
 margin/left = 640.0
 margin/right = 1280.0
 margin/bottom = 720.0
-puck = NodePath("../BluePuck")
+paddlePath = NodePath("../BluePaddle")
 
 
