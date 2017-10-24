@@ -5,24 +5,20 @@ export(int, "Blue", "Red") var puck_Texture = 1 #which puck texture to use
 
 var grabbed = false #is grabbed
 var newpos = Vector2(0, 0) #where to move to
-onready var paddleTextures = get_node("PaddleTextures") #reference to paddle textures
+onready var paddlePolygon = get_node("PaddlePolygon") #Find paddle polygon
 
 func get_paddle_material():
-	return paddleTextures.get_material();
+	return paddlePolygon.get_material();
 
 func _ready():
 	set_mode(MODE_STATIC); # set mode to static
 	set_fixed_process(true) # set fixed process
 	
-	#set puck texture
-	if(puck_Texture == 0):
-		paddleTextures.get_child(0).show()
-		paddleTextures.get_child(1).hide()
-	else:
-		paddleTextures.get_child(0).hide()
-		paddleTextures.get_child(1).show()
+	#Find correct texture path
+	var texture = "res://Assets/cicker" + ("blue" if puck_Texture == 0 else "red") + ".png";
 	
-	paddleTextures.set_material(paddleTextures.get_material().duplicate()) #create unique instance of material
+	paddlePolygon.set_texture(load(texture)) #Set texture
+	paddlePolygon.set_material(paddlePolygon.get_material().duplicate()) #Create unique material instance
 	pass
 
 func setGrabbed(grab):

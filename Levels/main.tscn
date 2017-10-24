@@ -1,9 +1,9 @@
 [gd_scene load_steps=10 format=1]
 
 [ext_resource path="res://Assets/field.png" type="Texture" id=1]
-[ext_resource path="res://Levels/Paddle.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Levels/DebugTouch.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Levels/Puck.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Levels/Puck.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Levels/Paddle.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Levels/DebugTouch.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Levels/TouchGrabber.tscn" type="PackedScene" id=5]
 
 [sub_resource type="LineShape2D" id=1]
@@ -58,11 +58,16 @@ transform/scale = Vector2( 12.9293, 12.8571 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="RedPaddle" parent="." instance=ExtResource( 2 )]
+[node name="Puck" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 640, 405 )
+collision/layers = 0
+
+[node name="RedPaddle" parent="." instance=ExtResource( 3 )]
 
 transform/pos = Vector2( 160, 405 )
 
-[node name="BluePaddle" parent="." instance=ExtResource( 2 )]
+[node name="BluePaddle" parent="." instance=ExtResource( 3 )]
 
 editor/display_folded = true
 transform/pos = Vector2( 1120, 405 )
@@ -73,69 +78,64 @@ puck_Texture = 0
 editor/display_folded = true
 transform/scale = Vector2( 0.5, 0.5 )
 
-[node name="Node2D" parent="debugtouch" instance=ExtResource( 3 )]
+[node name="Node2D" parent="debugtouch" instance=ExtResource( 4 )]
 
 transform/pos = Vector2( -68, -68 )
 transform/scale = Vector2( 2.125, 2.125 )
 
-[node name="Node2D1" parent="debugtouch" instance=ExtResource( 3 )]
+[node name="Node2D1" parent="debugtouch" instance=ExtResource( 4 )]
 
 transform/pos = Vector2( -240, -120 )
 transform/scale = Vector2( 2.125, 2.125 )
 text = 1
 
-[node name="Node2D2" parent="debugtouch" instance=ExtResource( 3 )]
+[node name="Node2D2" parent="debugtouch" instance=ExtResource( 4 )]
 
 transform/pos = Vector2( -360, -120 )
 transform/scale = Vector2( 2.125, 2.125 )
 text = 2
 
-[node name="Node2D3" parent="debugtouch" instance=ExtResource( 3 )]
+[node name="Node2D3" parent="debugtouch" instance=ExtResource( 4 )]
 
 transform/pos = Vector2( -480, -120 )
 transform/scale = Vector2( 2.125, 2.125 )
 text = 3
 
-[node name="Node2D4" parent="debugtouch" instance=ExtResource( 3 )]
+[node name="Node2D4" parent="debugtouch" instance=ExtResource( 4 )]
 
 transform/pos = Vector2( -600, -120 )
 transform/scale = Vector2( 2.125, 2.125 )
 text = 4
 
-[node name="Node2D5" parent="debugtouch" instance=ExtResource( 3 )]
+[node name="Node2D5" parent="debugtouch" instance=ExtResource( 4 )]
 
 transform/pos = Vector2( -720, -120 )
 transform/scale = Vector2( 2.125, 2.125 )
 text = 5
 
-[node name="Node2D6" parent="debugtouch" instance=ExtResource( 3 )]
+[node name="Node2D6" parent="debugtouch" instance=ExtResource( 4 )]
 
 transform/pos = Vector2( -840, -120 )
 transform/scale = Vector2( 2.125, 2.125 )
 text = 6
 
-[node name="Node2D7" parent="debugtouch" instance=ExtResource( 3 )]
+[node name="Node2D7" parent="debugtouch" instance=ExtResource( 4 )]
 
 transform/pos = Vector2( -960, -120 )
 transform/scale = Vector2( 2.125, 2.125 )
 text = 7
 
-[node name="Node2D8" parent="debugtouch" instance=ExtResource( 3 )]
+[node name="Node2D8" parent="debugtouch" instance=ExtResource( 4 )]
 
 transform/pos = Vector2( -1080, -120 )
 transform/scale = Vector2( 2.125, 2.125 )
 text = 8
 
-[node name="Node2D9" parent="debugtouch" instance=ExtResource( 3 )]
+[node name="Node2D9" parent="debugtouch" instance=ExtResource( 4 )]
 
 transform/pos = Vector2( -1200, -120 )
 transform/scale = Vector2( 2.125, 2.125 )
 text = 9
-
-[node name="Puck" parent="." instance=ExtResource( 4 )]
-
-transform/pos = Vector2( 640, 405 )
-collision/layers = 0
 
 [node name="Walls" type="StaticBody2D" parent="."]
 

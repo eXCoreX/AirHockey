@@ -1,15 +1,14 @@
-[gd_scene load_steps=7 format=1]
+[gd_scene load_steps=6 format=1]
 
 [ext_resource path="res://Scripts/Paddle.gd" type="Script" id=1]
-[ext_resource path="res://Assets/cickerblue.png" type="Texture" id=2]
-[ext_resource path="res://Assets/cickerred.png" type="Texture" id=3]
+[ext_resource path="res://Assets/cickerred.png" type="Texture" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
 
 custom_solver_bias = 0.0
 radius = 96.0
 
-[sub_resource type="CanvasItemShader" id=2]
+[sub_resource type="CanvasItemShader" id=4]
 
 _code = {
 "fragment": "uniform float flash = 0;
@@ -24,10 +23,10 @@ COLOR = mix(t, vec4(1, 1, 1, t.a), flash);",
 "vertex_ofs": 0
 }
 
-[sub_resource type="CanvasItemMaterial" id=3]
+[sub_resource type="CanvasItemMaterial" id=5]
 
-shader/shader = SubResource( 2 )
-shader/shading_mode = 1
+shader/shader = SubResource( 4 )
+shader/shading_mode = 0
 shader_param/flash = 0.0
 
 [node name="Puck" type="RigidBody2D"]
@@ -56,23 +55,21 @@ damp_override/angular = -1.0
 script/script = ExtResource( 1 )
 puck_Texture = 1
 
-[node name="PaddleTextures" type="Node2D" parent="."]
+[node name="PaddlePolygon" type="Polygon2D" parent="."]
 
-material/material = SubResource( 3 )
+material/material = SubResource( 5 )
 transform/scale = Vector2( 12, 12 )
-
-[node name="BluePaddle" type="Sprite" parent="PaddleTextures"]
-
-visibility/visible = false
-material/use_parent = true
-transform/pos = Vector2( -2.86102e-06, -2.86102e-06 )
-texture = ExtResource( 2 )
-
-[node name="RedPaddle" type="Sprite" parent="PaddleTextures"]
-
-material/use_parent = true
-transform/pos = Vector2( -2.86102e-06, -2.86102e-06 )
-texture = ExtResource( 3 )
+polygon = Vector2Array( 3, -8, -2.91667, -8, -5, -7, -7, -5, -8, -3, -8, 3, -7, 5, -5, 7, -3, 8, 3, 8, 5, 7, 7, 5, 8, 3, 8, -3, 7, -5, 5, -7 )
+uv = Vector2Array( 11, 0, 5.08333, 0, 3, 1, 1, 3, 0, 5, 0, 11, 1, 13, 3, 15, 5, 16, 11, 16, 13, 15, 15, 13, 16, 11, 16, 5, 15, 3, 13, 1 )
+color = Color( 1, 1, 1, 1 )
+vertex_colors = ColorArray(  )
+offset = Vector2( 0, 0 )
+texture/texture = ExtResource( 2 )
+texture/offset = Vector2( 0, 0 )
+texture/scale = Vector2( 1, 1 )
+texture/rotation = 0.0
+invert/enable = false
+invert/border = 100.0
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 
