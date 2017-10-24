@@ -5,7 +5,7 @@ var counter = 0; # counter for hits
 
 const sv = 350 #start velocity
 var velocity = Vector2(sv, 0) #current velocity
-var maxVelocity = 4203 #Maximum velocity
+var maxVelocity = 3000 #Maximum velocity
 
 func _ready():
 	set_linear_velocity(velocity) #start velocity
@@ -27,7 +27,9 @@ func _integrate_forces(state):
 		TweenNode.interpolate_callback(material, 0.1, "set_shader_param", "flash", 0) #stop flash after x seconds
 		TweenNode.start() #start tween
 		if(paddleVelocity.length() != 0 && newVelocity.dot(paddleVelocity) > 0): #if paddle is moving and at the correct angle 
-			newVelocity = newVelocity + paddleVelocity * 0.135 # add paddle's velocity to puck's velocity 
+			newVelocity = newVelocity + paddleVelocity.normalized() * min(paddleVelocity.length() * 0.135, 1000)  # add paddle's velocity to puck's velocity 
+		elif(newVelocity.length() == 0): #if puck isn't moving
+			newVelocity = paddleVelocity * 0.135
 		elif(paddleVelocity.length() == 0): #if paddle isn't moving
 			TweenNode.interpolate_property(self, "velocity/linear", newVelocity, 0.85*newVelocity, 2, Tween.TRANS_LINEAR, Tween.EASE_OUT) #slowdown slowly
 			TweenNode.start()
