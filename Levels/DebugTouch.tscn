@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Scripts/DebugTouch.gd" type="Script" id=1]
 
-[node name="Node2D" type="Node2D"]
+[node name="DebugTouch" type="Node2D"]
 
 transform/scale = Vector2( 0.5, 0.5 )
 script/script = ExtResource( 1 )

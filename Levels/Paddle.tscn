@@ -1,0 +1,98 @@
+[gd_scene load_steps=7 format=1]
+
+[ext_resource path="res://Scripts/Paddle.gd" type="Script" id=1]
+[ext_resource path="res://Assets/cickerblue.png" type="Texture" id=2]
+[ext_resource path="res://Assets/cickerred.png" type="Texture" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+
+custom_solver_bias = 0.0
+radius = 96.0
+
+[sub_resource type="CanvasItemShader" id=2]
+
+_code = {
+"fragment": "uniform float flash = 0;
+
+vec4 t = tex(TEXTURE, UV);
+
+COLOR = mix(t, vec4(1, 1, 1, t.a), flash);",
+"fragment_ofs": 0,
+"light": "",
+"light_ofs": 0,
+"vertex": "",
+"vertex_ofs": 0
+}
+
+[sub_resource type="CanvasItemMaterial" id=3]
+
+shader/shader = SubResource( 2 )
+shader/shading_mode = 1
+shader_param/flash = 0.0
+
+[node name="Puck" type="RigidBody2D"]
+
+input/pickable = false
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+mode = 1
+mass = 1.0
+friction = 0.0
+bounce = 1.0
+gravity_scale = 0.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+velocity/linear = Vector2( 0, 0 )
+velocity/angular = 0.0
+damp_override/linear = -1.0
+damp_override/angular = -1.0
+script/script = ExtResource( 1 )
+puck_Texture = 1
+
+[node name="PaddleTextures" type="Node2D" parent="."]
+
+material/material = SubResource( 3 )
+transform/scale = Vector2( 12, 12 )
+
+[node name="BluePaddle" type="Sprite" parent="PaddleTextures"]
+
+visibility/visible = false
+material/use_parent = true
+transform/pos = Vector2( -2.86102e-06, -2.86102e-06 )
+texture = ExtResource( 2 )
+
+[node name="RedPaddle" type="Sprite" parent="PaddleTextures"]
+
+material/use_parent = true
+transform/pos = Vector2( -2.86102e-06, -2.86102e-06 )
+texture = ExtResource( 3 )
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="Label" type="Label" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = -64.0
+margin/top = -64.0
+margin/right = 64.0
+margin/bottom = 64.0
+text = "(0, 0)"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+
